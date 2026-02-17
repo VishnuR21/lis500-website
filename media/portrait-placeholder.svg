@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait placeholder</title>
+  <desc id="desc">A friendly abstract portrait silhouette for a profile photo.</desc>
+  <rect width="400" height="500" fill="#efe9df"/>
+  <circle cx="200" cy="170" r="90" fill="#c2a98a"/>
+  <rect x="90" y="250" width="220" height="200" rx="90" fill="#7a8b7f"/>
+  <rect x="120" y="280" width="160" height="140" rx="70" fill="#55625a"/>
+  <circle cx="170" cy="160" r="12" fill="#3b2f2a"/>
+  <circle cx="230" cy="160" r="12" fill="#3b2f2a"/>
+  <rect x="165" y="200" width="70" height="14" rx="7" fill="#3b2f2a"/>
+</svg>
