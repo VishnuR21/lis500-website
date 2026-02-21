@@ -3,73 +3,122 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tech Hero</title>
+    <title>Tech Heroes</title>
     <link rel="stylesheet" href="stylepage.css" />
   </head>
   <body>
+    <!-- //## Accessibility skip link -->
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
-      <!-- Site navigation -->
+      <!-- //## Site navigation -->
       <nav class="navbar" aria-label="Primary">
         <div class="brand">LIS 500 Project</div>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="resources.html">Implicit Bias Guide</a></li>
-          <li><a href="tech-hero.html" aria-current="page">Tech Hero</a></li>
+          <li><a href="tech-hero.html" aria-current="page">Tech Heroes</a></li>
         </ul>
       </nav>
     </header>
 
     <main id="main">
-      <!-- Hero section -->
+      <!-- //## Page intro -->
       <section class="hero" aria-labelledby="hero-title">
         <div>
-          <p class="badge">Tech Hero</p>
-          <h1 id="hero-title">Tim Berners‑Lee</h1>
+          <h1 id="hero-title">Our Tech Heroes</h1>
           <p>
-            Inventor of the World Wide Web and advocate for an open,
-            user‑centered internet.
+            Each of us chose a different tech hero and connected their work to
+            equity, access, and intersectionality in tech.
           </p>
         </div>
-        <figure class="media-frame">
-          <img src="media/TBL.jpg.webp" alt="Tim Berners-Lee" />
-        </figure>
       </section>
 
-    <!-- Tech hero profile -->
-    <section id="profile" class="section" aria-labelledby="profile-title">
-        <h2 id="profile-title">Profile</h2>
+      <!-- //## Vishnu's tech hero -->
+      <section id="tim" class="section" aria-labelledby="tim-title">
+        <h2 id="tim-title">Vishnu’s Tech Hero: Tim Berners‑Lee</h2>
+        <img
+          class="float-right"
+          src="media/TBL.jpg.webp"
+          alt="Tim Berners-Lee"
+        />
         <p>
-          Tim Berners-Lee is the computer scientist who invented the World Wide
-          Web. In 1989, while working at CERN, he came up with the idea of
-          linking and sharing information across different computers. He created
-          the first web browser and web server, and he made the main web
-          technologies like HTML and HTTP free for anyone to use. Because he
-          chose not to keep it private or charge for it, people all over the
-          world were able to build websites and contribute to the internet as we
-          know it.
+          Tim Berners‑Lee invented the World Wide Web and made core web
+          technologies like HTML and HTTP free for anyone to use. That decision
+          lowered barriers for schools, small organizations, and individuals to
+          publish and participate online.
         </p>
         <p>
-          His leadership matters for equity because keeping the web open lowered
-          barriers to entry. Schools, small organizations, and individuals did
-          not need special permission or large amounts of money to create
-          something online. He also started the World Wide Web Consortium, which
-          brings together different groups to agree on web standards. This helps
-          make sure the web works across devices and for different communities,
-          instead of being controlled by just one company.
+          Intersectionality shows up here because access to information is not
+          evenly distributed. Open standards make it easier for communities with
+          fewer resources to build tools, publish stories, and be represented
+          online.
+        </p>
+        <ul class="resource-list">
+          <li>
+            <a
+              href="https://www.w3.org/People/Berners-Lee-Bio.html"
+              target="_blank"
+              rel="noopener"
+              >W3C biography</a
+            >
+            <span>Official bio from the W3C.</span>
+          </li>
+          <li>
+            <a
+              href="https://home.cern/science/computing/birth-web"
+              target="_blank"
+              rel="noopener"
+              >CERN: The birth of the Web</a
+            >
+            <span>How the web started at CERN.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- //## Kavya's tech hero -->
+      <section id="angie" class="section" aria-labelledby="angie-title">
+        <h2 id="angie-title">Kavya’s Tech Hero: Angie Jones</h2>
+        <img
+          class="float-right"
+          src="https://i0.wp.com/angiejones.tech/wp-content/uploads/2024/09/headshot-angie-jones.jpg?resize=300%2C292&ssl=1"
+          alt="Angie Jones"
+        />
+        <p>
+          Angie Jones is the Vice President of Engineering, AI Tools &
+          Enablement at Block, Inc. She is an award‑winning educator, an
+          international keynote speaker, and a Master Inventor with 27 patented
+          inventions. She also teaches and advocates for better pathways into
+          tech education and testing.
         </p>
         <p>
-          More recently, Berners-Lee has spoken out about how much power and
-          personal data are now controlled by a small number of companies. He
-          has argued that the web should give users more control over their own
-          information and better protect privacy. Through projects like Solid,
-          he has focused on the idea that people should own their data and
-          decide who can access it. In a class like LIS 500, he is a good
-          example of how design choices in technology can either open access and
-          spread power more evenly, or concentrate power in the hands of a few.
+          Her work reflects intersectionality by pushing for broader access to
+          learning and by mentoring new technologists. She has highlighted the
+          importance of bringing more women and minorities into tech and has
+          supported programs like Black Girls Code.
         </p>
+        <p>
+          Watch:
+          <a
+            href="https://www.youtube.com/watch?v=vkvvHa4ZYpM"
+            target="_blank"
+            rel="noopener"
+          >
+            Angie Jones talk on Test Automation University
+          </a>
+        </p>
+        <ul class="resource-list">
+          <li>
+            <a
+              href="https://angiejones.tech/media-kit/"
+              target="_blank"
+              rel="noopener"
+              >Angie Jones media kit</a
+            >
+            <span>Official bio and headshots.</span>
+          </li>
+        </ul>
       </section>
     </main>
   </body>
