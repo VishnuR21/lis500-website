@@ -381,6 +381,22 @@ main {
   background: #fff;
 }
 
+.video-embed video {
+  width: 100%;
+  display: block;
+}
+
+.evidence-video {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.evidence-video video {
+  max-height: 420px;
+  object-fit: contain;
+  background: #000;
+}
+
 @media (max-width: 800px) {
   .guide-layout {
     grid-template-columns: 1fr;

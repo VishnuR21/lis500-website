@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project 3 ML</title>
+    <link rel="stylesheet" href="stylepage.css" />
+  </head>
+  <body>
+    <!-- //## Accessibility skip link -->
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <!-- //## Site navigation -->
+      <nav class="navbar" aria-label="Primary">
+        <div class="brand">LIS 500 Project</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="resources.html">Implicit Bias Guide</a></li>
+          <li><a href="tech-hero.html">Tech Heroes</a></li>
+          <li><a href="project3.html" aria-current="page">Project 3 ML</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- //## Project 3 page intro -->
+      <section class="hero" aria-labelledby="p3-title">
+        <div>
+          <h1 id="p3-title">Teachable Machines Project</h1>
+          <p>
+            This page documents our group's machine learning experiment using
+            Google's Teachable Machine, featuring a live demo, our original
+            dataset, and our reflection and experiences during this project.
+          </p>
+        </div>
+      </section>
+
+      <!-- //## Teachable Machine demo embed area -->
+      <section class="section" aria-labelledby="model-title">
+        <h2 id="model-title">Live Model Demo</h2>
+        <p>
+          <strong>Objects Trained:</strong> Rose, Black Sharpie, Black Airpod's
+          Case, Yellow Pencil, Black Remote, and a Mini Flower Pot
+        </p>
+        <div id="tm-p5-container" class="section"></div>
+      </section>
+
+      <!-- //## Video evidence -->
+      <section class="section" aria-labelledby="video-title">
+        <h2 id="video-title">Video of Model in Use</h2>
+        <div class="video-embed evidence-video">
+          <video controls>
+            <source
+              src="project3/evidence/demo-video.mov"
+              type="video/quicktime"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
+      <!-- //## Screenshot evidence -->
+      <section class="section" aria-labelledby="screenshot-title">
+        <h2 id="screenshot-title">Model Screenshot</h2>
+        <figure class="media-frame">
+          <img
+            src="project3/evidence/screenshot-ml-page.png"
+            alt="Screenshot of our Teachable Machine classes and preview"
+          />
+        </figure>
+      </section>
+
+      <!-- //## Links to repo and dataset -->
+      <section class="section" aria-labelledby="links-title">
+        <h2 id="links-title">Links</h2>
+        <ul class="resource-list">
+          <li>
+            <strong>Github repository link:</strong>
+            <span>Add your real GitHub repository URL as plain text.</span>
+          </li>
+          <li>
+            <strong>Dataset folder:</strong>
+            <span>project3/dataset</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- //## Project statement scaffold -->
+      <section class="section" aria-labelledby="statement-title">
+        <h2 id="statement-title">Group Project Statement</h2>
+        <p>
+          Suggested structure: project goal, data collection process, model
+          classes, testing observations, performance issues, bias risks, and
+          improvements for final iteration.
+        </p>
+      </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.12.2/dist/ml5.min.js"></script>
+    <script>
+      // The video
+      let video;
+      // For displaying the label
+      let label = "waiting...";
+      // The classifier
+      let classifier;
+      let modelURL =
+        "https://teachablemachine.withgoogle.com/models/kSG-kTfOr/";
+
+      // STEP 1: Load the model!
+      function preload() {
+        classifier = ml5.imageClassifier(modelURL + "model.json");
+      }
+
+      function setup() {
+        let canvas = createCanvas(640, 520);
+        canvas.parent("tm-p5-container");
+        // Create the video
+        video = createCapture(VIDEO, () => {
+          // Start classifying only after webcam stream is ready
+          classifyVideo();
+        });
+        video.size(640, 480);
+        video.hide();
+      }
+
+      // STEP 2 classify the videeo!
+      function classifyVideo() {
+        classifier.classify(video, gotResults);
+      }
+
+      function draw() {
+        background(0);
+
+        // Draw the video
+        // image(video, 0, 0);
+
+        // STEP 4: Draw the label
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        fill(255);
+        text(label, width / 2, height - 16);
+
+        // Pick an emoji, the "default" is rose
+        let emoji = "🌹";
+        if (label == "Sharpie") {
+          emoji = "🖊️";
+        } else if (label == "Airpod Case") {
+          emoji = "🎧";
+        } else if (label == "Yellow Pencil") {
+          emoji = "✏️";
+        } else if (label == "Remote") {
+          emoji = "🕹️";
+        } else if (label == "Mini Flower Pot") {
+          emoji = "🪴";
+        }
+
+        // Draw the emoji
+        textSize(256);
+        text(emoji, width / 2, height / 2);
+      }
+
+      // STEP 3: Get the classification!
+      function gotResults(error, results) {
+        // Something went wrong!
+        if (error) {
+          console.error(error);
+          // Retry in case first call happened before stream/model settled
+          setTimeout(classifyVideo, 200);
+          return;
+        }
+        // Store the label and classify again!
+        label = results[0].label;
+        classifyVideo();
+      }
+    </script>
+  </body>
+</html>
