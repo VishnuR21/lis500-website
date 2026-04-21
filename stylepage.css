@@ -247,6 +247,25 @@ main {
   margin-top: 8px;
 }
 
+/* //## Center the p5 live demo area */
+#tm-p5-container {
+  display: flex;
+  justify-content: center;
+}
+
+#tm-p5-container canvas {
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  background: #000;
+}
+
+.button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* //## Split columns */
 .split {
   display: grid;
@@ -402,6 +421,18 @@ main {
   max-height: 420px;
   object-fit: contain;
   background: #000;
+}
+
+/* //## Statement image row */
+.statement-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.statement-gallery .media-frame {
+  padding: 6px;
 }
 
 @media (max-width: 800px) {

@@ -48,6 +48,15 @@
           <strong>Objects Trained:</strong> Rose, Black Sharpie, Black Airpod's
           Case, Yellow Pencil, Black Remote, and a Mini Flower Pot
         </p>
+        <div class="button-row">
+          <button
+            id="start-model-btn"
+            class="button primary"
+            type="button"
+          >
+            Start Model
+          </button>
+        </div>
         <div id="tm-p5-container" class="section"></div>
       </section>
 
@@ -89,21 +98,23 @@
         <h2 id="links-title">Links</h2>
         <ul class="resource-list">
           <li>
-            <strong>Github repository link:</strong>
+            <strong>Github repository:</strong>
             <a
+              class="button"
               href="https://github.com/VishnuR21/lis500-website"
               target="_blank"
               rel="noopener"
-              >https://github.com/VishnuR21/lis500-website</a
+              >Open Repository</a
             >
           </li>
           <li>
             <strong>Dataset folder:</strong>
             <a
+              class="button"
               href="https://github.com/VishnuR21/lis500-website/tree/main/project3/dataset"
               target="_blank"
               rel="noopener"
-              >https://github.com/VishnuR21/lis500-website/tree/main/project3/dataset</a
+              >Open Dataset Folder</a
             >
           </li>
         </ul>
@@ -112,6 +123,32 @@
       <!-- //## Project statement scaffold -->
       <section class="section" aria-labelledby="statement-title">
         <h2 id="statement-title">Group Project Statement</h2>
+        <div class="statement-gallery" aria-label="Sample training images">
+          <figure class="media-frame">
+            <img
+              src="project3/evidence/statement-gallery/sharpie-sample.jpg"
+              alt="Sample training image of the sharpie class"
+            />
+          </figure>
+          <figure class="media-frame">
+            <img
+              src="project3/evidence/statement-gallery/airpod-sample.jpg"
+              alt="Sample training image of the airpod case class"
+            />
+          </figure>
+          <figure class="media-frame">
+            <img
+              src="project3/evidence/statement-gallery/remote-sample.jpg"
+              alt="Sample training image of the remote class"
+            />
+          </figure>
+          <figure class="media-frame">
+            <img
+              src="project3/evidence/statement-gallery/flowerpot-sample.jpg"
+              alt="Sample training image of the mini flower pot class"
+            />
+          </figure>
+        </div>
         <p>
           For our project 3, our group used Google Teachable Machine's model
           training and uploaded it to the cloud so we could use the trained
@@ -236,12 +273,17 @@
     <script>
       // The video
       let video;
+      let canvas;
       // For displaying the label
       let label = "waiting...";
+      let confidence = 0;
       // The classifier
       let classifier;
       let modelURL =
         "https://teachablemachine.withgoogle.com/models/rAi4V1XXo/";
+      let modelRunning = false;
+      let modelStarting = false;
+      const startText = 'Click "Start Model" to turn on camera and begin predictions.';
 
       // STEP 1: Load the model!
       function preload() {
@@ -249,33 +291,100 @@
       }
 
       function setup() {
-        let canvas = createCanvas(640, 520);
+        canvas = createCanvas(640, 520);
         canvas.parent("tm-p5-container");
-        // Create the video
-        video = createCapture(VIDEO, () => {
-          // Start classifying only after webcam stream is ready
-          classifyVideo();
-        });
-        video.size(640, 480);
-        video.hide();
+        noLoop();
+
+        const startButton = document.getElementById("start-model-btn");
+        startButton.addEventListener("click", toggleModel);
       }
 
       // STEP 2 classify the videeo!
       function classifyVideo() {
+        if (!modelRunning || !video) return;
         classifier.classify(video, gotResults);
+      }
+
+      function toggleModel() {
+        if (modelRunning || modelStarting) {
+          stopModel();
+        } else {
+          startModel();
+        }
+      }
+
+      function startModel() {
+        if (modelRunning || modelStarting) return;
+        modelStarting = true;
+
+        const startButton = document.getElementById("start-model-btn");
+        startButton.disabled = true;
+        startButton.textContent = "Starting...";
+
+        // Create the video only after user click for better UX/privacy
+        video = createCapture(VIDEO, () => {
+          video.size(640, 480);
+          video.hide();
+          modelRunning = true;
+          modelStarting = false;
+          label = "waiting...";
+          confidence = 0;
+          startButton.disabled = false;
+          startButton.textContent = "Stop Model";
+          loop();
+          classifyVideo();
+        });
+      }
+
+      function stopModel() {
+        modelRunning = false;
+        modelStarting = false;
+
+        if (video) {
+          if (video.elt && video.elt.srcObject) {
+            const tracks = video.elt.srcObject.getTracks();
+            tracks.forEach((track) => track.stop());
+          }
+          video.remove();
+          video = null;
+        }
+
+        label = "waiting...";
+        confidence = 0;
+
+        const startButton = document.getElementById("start-model-btn");
+        startButton.disabled = false;
+        startButton.textContent = "Start Model";
+
+        noLoop();
+        redraw();
       }
 
       function draw() {
         background(0);
 
-        // Draw the video
-        // image(video, 0, 0);
+        // Draw the video so users can frame objects clearly
+        if (video) {
+          image(video, 0, 0, 640, 480);
+        } else {
+          fill(255);
+          textSize(22);
+          textAlign(CENTER, CENTER);
+          text(startText, width / 2, height / 2);
+          return;
+        }
 
         // STEP 4: Draw the label
-        textSize(32);
+        fill(0);
+        rect(0, 480, 640, 40);
+        textSize(22);
         textAlign(CENTER, CENTER);
         fill(255);
-        text(label, width / 2, height - 16);
+        text(
+          "Prediction: " + label + " (" + (confidence * 100).toFixed(1) + "%)",
+          width / 2,
+          height - 18
+        );
 
         // Pick an emoji, the "default" is rose
         let emoji = "🌹";
@@ -292,12 +401,14 @@
         }
 
         // Draw the emoji
-        textSize(256);
-        text(emoji, width / 2, height / 2);
+        textSize(90);
+        text(emoji, width - 60, 60);
       }
 
       // STEP 3: Get the classification!
       function gotResults(error, results) {
+        if (!modelRunning) return;
+
         // Something went wrong!
         if (error) {
           console.error(error);
@@ -305,8 +416,15 @@
           setTimeout(classifyVideo, 200);
           return;
         }
+
+        if (!results || !results[0]) {
+          setTimeout(classifyVideo, 120);
+          return;
+        }
+
         // Store the label and classify again!
         label = results[0].label;
+        confidence = results[0].confidence;
         classifyVideo();
       }
     </script>
