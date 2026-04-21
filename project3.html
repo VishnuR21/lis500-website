@@ -49,11 +49,7 @@
           Case, Yellow Pencil, Black Remote, and a Mini Flower Pot
         </p>
         <div class="button-row">
-          <button
-            id="start-model-btn"
-            class="button primary"
-            type="button"
-          >
+          <button id="start-model-btn" class="button primary" type="button">
             Start Model
           </button>
         </div>
@@ -283,7 +279,7 @@
         "https://teachablemachine.withgoogle.com/models/rAi4V1XXo/";
       let modelRunning = false;
       let modelStarting = false;
-      const startText = 'Click "Start Model" to turn on camera and begin predictions.';
+      const startText = 'Click "Start Model" to turn on camera';
 
       // STEP 1: Load the model!
       function preload() {
@@ -383,7 +379,7 @@
         text(
           "Prediction: " + label + " (" + (confidence * 100).toFixed(1) + "%)",
           width / 2,
-          height - 18
+          height - 18,
         );
 
         // Pick an emoji, the "default" is rose
